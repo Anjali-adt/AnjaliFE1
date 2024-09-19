@@ -1,0 +1,109 @@
+<!--<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration Form</title>
+    </head>
+    <body>
+        <h1>AlphaDot Technologies</h1>
+
+        <form onSubmit="MyFunction(event)">
+            <label for="fname">First Name</label><br>
+            <input type="text" id="fname" onchange="MyFunction()"><br>
+
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" onchange="MyFunction()"><br>
+
+            <label for="age">Age</label>
+            <input type="number" id="age" onchange="MyFunction()"><br>
+
+            <label for="city">City</label>
+            <input type="text" id="city" onchange="MyFunction()"><br>
+
+            <label for="state">State</label>
+            <input type="text" id="state" onchange="MyFunction()"><br>
+
+            <label for="add">Address</label><br>
+            <input type="text" id="add" onchange="MyFunction()"><br>
+            
+            <button type="submit" value="submit">Submit</button>
+        </form>
+
+        <script>
+            function MyFunction(event){
+               event.preventDefault();
+
+                const fname = document.getElementById('fname').value;
+                const lname = document.getElementById('lname').value;
+                const age = document.getElementById('age').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const address = document.getElementById('add').value;
+               
+                console.log("First Name:", fname);
+                console.log("Last Name:",lname)
+                console.log("Age:",age)
+                console.log("City:",c) 
+                console.log("State:",s)
+                console.log("Address:" ,add)
+
+
+
+            }
+        </script>
+    </body>
+</html>-->
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration Form</title>
+    </head>
+    <body>
+        <h1>AlphaDot Technologies</h1>
+
+        <form onSubmit="MyFunction(event)">
+            <label for="fname">First Name</label><br>
+            <input type="text" id="fname"><br>
+
+            <label for="lname">Last Name</label><br>
+            <input type="text" id="lname"><br>
+
+            <label for="age">Age</label><br>
+            <input type="number" id="age"><br>
+
+            <label for="city">City</label><br>
+            <input type="text" id="city"><br>
+
+            <label for="state">State</label><br>
+            <input type="text" id="state"><br>
+
+            <label for="add">Address</label><br>
+            <input type="text" id="add"><br>
+            
+            <button type="submit">Submit</button>
+        </form>
+
+        <script>
+            function MyFunction(event) {
+                // Prevent the form from submitting
+                event.preventDefault();
+
+                const fname = document.getElementById('fname').value;
+                const lname = document.getElementById('lname').value;
+                const age = document.getElementById('age').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const address = document.getElementById('add').value;
+
+                // Log all the form details at once
+                console.log("First Name:", fname);
+                console.log("Last Name:", lname);
+                console.log("Age:", age);
+                console.log("City:", city);
+                console.log("State:", state);
+                console.log("Address:", address);
+            }
+        </script>
+    </body>
+</html>
