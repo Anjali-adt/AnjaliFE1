@@ -3,7 +3,6 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,17 +35,18 @@
         form input[type="email"],
         form input[type="password"] {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             margin-bottom: 16px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 14px;
+            box-sizing: border-box;
         }
 
         /* Submit button styling */
         form input[type="submit"] {
-            background-color: grey;
-            color: white;
+            background-color: rgb(43, 183, 60);
+            color: rgb(34, 102, 49);
             padding: 10px 15px;
             border: none;
             border-radius: 4px;
@@ -54,8 +54,10 @@
             font-size: 16px;
         }
 
-        form input[type="submit"]:hover {
-            background-color: #218838;
+        button:hover {
+            background-color: green;
+            color: #f4f4f4;
+
         }
 
         /* Styling the validation message box */
@@ -81,20 +83,18 @@
             color: green;
         }
 
-        /* Error message for invalid email feedback */
-        #error-feedback {
-            color: red;
+        /* Checkbox color change when valid */
+        input[type="checkbox"]:checked {
+            background-color: green;
         }
     </style>
 </head>
 
 <body>
 
-
-
     <div class="container">
         <h1>Registration form</h1>
-        <form onsubmit="validate()">
+        <form id="registrationForm" >
 
             <label for="usrname">Username:</label>
             <input type="text" id="usrname" name="usrname" placeholder="Enter your name"><br>
@@ -112,13 +112,12 @@
 
         </form>
 
-
         <div id="message">
-            <h3>Password must contain the following parameters:</h3>
-            <p id="letter" class="invalid"><b>lowercase</b> letter</p>
-            <p id="capital" class="invalid"> <b>capital (uppercase)</b> letter</p>
-            <p id="number" class="invalid"> <b>number</b></p>
-            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+            <h3>Password must contain the following parameters:</h3><br>
+            <input type="checkbox" id="letter" class="invalid" disabled><b>lowercase letter</b><br>
+            <input type="checkbox" id="capital" class="invalid" disabled><b>capital (uppercase) letter</b><br>
+            <input type="checkbox" id="number" class="invalid" disabled><b>number</b><br>
+            <input type="checkbox" id="length" class="invalid" disabled><b>minimum 8 characters</b><br>
         </div>
     </div>
 
@@ -128,6 +127,7 @@
         var capital = document.getElementById("capital");
         var number = document.getElementById("number");
         var length = document.getElementById("length");
+        var submitButton = document.getElementById("submitButton");
 
         // When the user clicks on the password field, show the message box
         myInput.onfocus = function () {
@@ -141,14 +141,19 @@
 
         // When the user starts to type something inside the password field
         myInput.onkeyup = function () {
+            var isValid = true;
+
             // Validate lowercase letters
             var lowerCaseLetters = /[a-z]/g;
             if (myInput.value.match(lowerCaseLetters)) {
                 letter.classList.remove("invalid");
                 letter.classList.add("valid");
+                letter.checked = true;
             } else {
                 letter.classList.remove("valid");
                 letter.classList.add("invalid");
+                letter.checked = false;
+                isValid = false;
             }
 
             // Validate capital letters
@@ -156,9 +161,12 @@
             if (myInput.value.match(upperCaseLetters)) {
                 capital.classList.remove("invalid");
                 capital.classList.add("valid");
+                capital.checked = true;
             } else {
                 capital.classList.remove("valid");
                 capital.classList.add("invalid");
+                capital.checked = false;
+                isValid = false;
             }
 
             // Validate numbers
@@ -166,24 +174,33 @@
             if (myInput.value.match(numbers)) {
                 number.classList.remove("invalid");
                 number.classList.add("valid");
+                number.checked = true;
             } else {
                 number.classList.remove("valid");
                 number.classList.add("invalid");
+                number.checked = false;
+                isValid = false;
             }
 
             // Validate length
             if (myInput.value.length >= 8) {
                 length.classList.remove("invalid");
                 length.classList.add("valid");
+                length.checked = true;
             } else {
                 length.classList.remove("valid");
                 length.classList.add("invalid");
+                length.checked = false;
+                isValid = false;
             }
+
+            // Enable submit button only if password is valid
+            submitButton.disabled = !isValid;
         }
 
         function validateEmailInput() {
             const emailInput = document.getElementById('emailInput').value;
-            //const feedbackElement = document.getElementById('emailFeedback');
+            const feedbackElement = document.getElementById('emailFeedback');
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
             if (emailRegex.test(emailInput)) {
@@ -193,28 +210,32 @@
             }
         }
 
-        //submit button validation
-        let sButton = document.getElementById('usrname', 'emailInput', 'psw');
-        let button = document.getElementById('submitButton');
+        document.getElementById('registrationForm').addEventListener('submit', function (event) {
+            event.preventDefault();
 
-        sButton.addEventListener('input', validate);
+            var username = document.getElementById("usrname").value;
+            var email = document.getElementById("emailInput").value;
+            var password = document.getElementById("psw").value;
 
-        function validate() {
-            var sButtonValue = sButton.value;
-            var sButtonRGX = /[2-9]{1}\d{3}/;
+            var users = JSON.parse(localStorage.getItem("users")) || [];
+            var userExists = users.some(function (user) {
+                return user.username === username || user.email === email;
+            });
 
-            if (!sButtonValue.match(sButton)) {
-                button.disabled = true;
-            } else {
-                button.disabled = false;
+            if (userExists) {
+                alert("User with this name or email already exists. Please enter a valid username or email");
+                return;
             }
-        }
 
+            users.push({ username: username, email: email, password: password });
+            localStorage.setItem("users", JSON.stringify(users));
 
-
-
+            alert("User registered successfully!");
+            document.getElementById("registrationForm").reset();
+        });
     </script>
 
 </body>
 
 </html>
+
