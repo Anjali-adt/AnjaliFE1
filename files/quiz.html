@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Quiz</title>
+
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Quiz Container */
+        .quiz-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        /* Question Heading */
+        h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Options Styling */
+        .option {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Buttons Styling */
+        button {
+            padding: 10px 15px;
+            margin: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        /* Score Display */
+        #score {
+            font-size: 20px;
+            color: #007bff;
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .quiz-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="quiz-container">
+        <h2 id="que"></h2>
+        <h2 id="test1"></h2>
+        <div class="option">
+            <input type="radio" id="1" name="answer" value="Answer1">
+            <label id="a">Option A</label><br>
+
+            <input type="radio" id="2" name="answer" value="Answer2">
+            <label id="b">Option B</label><br>
+
+            <input type="radio" id="3" name="answer" value="Answer3">
+            <label id="c">Option C</label><br>
+
+            <input type="radio" id="4" name="answer" value="Answer4">
+            <label id="d">Option D</label><br><br>
+        </div>
+  
+
+    <div class="container">
+    <button style="margin-left: 20px;" onclick="queCheck()">Check</button>
+    <button style="margin-left: 20px;" onclick="nextQue()">Next</button>
+    </div>
+    <p id="score"></p>
+</div>
+    
+
+    <script>
+        const quiz = [
+            { question: "What is the capital of France?", Answer1: "Paris", Answer2: "Berlin", Answer3: "Rome", Answer4: "London", correctAnswer: "Paris" },
+            { question: "Is JavaScript a programming language?", Answer1: "yes", Answer2: "no", Answer3: "maybe", Answer4: "none", correctAnswer: "yes" },
+            { question: "What is 5 + 3?", Answer1: "6", Answer2: "7", Answer3: "8", Answer4: "9", correctAnswer: "8" },
+            { question: "Is Earth the third planet from the Sun?", Answer1: "yes", Answer2: "no", Answer3: "maybe", Answer4: "none", correctAnswer: "yes" },
+        ];
+
+        let i = 0;
+        let score = 0;
+
+        displayQue();
+
+        function displayQue() {
+            document.getElementById('que').innerHTML = "Q" + (i + 1) + ": " + quiz[i].question;
+            document.getElementById('a').innerHTML = quiz[i].Answer1;
+            document.getElementById('b').innerHTML = quiz[i].Answer2;
+            document.getElementById('c').innerHTML = quiz[i].Answer3;
+            document.getElementById('d').innerHTML = quiz[i].Answer4;
+        }
+
+        function getSelectedAnswer() {
+            const answers = document.getElementsByName('answer');
+            let selectedValue = null;
+
+            answers.forEach((answer) => {
+                if (answer.checked) {
+                    selectedValue = answer.value;
+                }
+            });
+            return selectedValue;
+        }
+
+        function queCheck() {
+            const selectedAnswer = getSelectedAnswer();
+            if (!selectedAnswer) {
+                alert("Please select an answer");
+               // return;
+            }
+
+            else if (quiz[i][selectedAnswer] === quiz[i].correctAnswer) {
+                alert("Correct answer!");
+                score++;
+            } else {
+                alert("Wrong answer!");
+            }
+
+            document.getElementById("score").innerHTML = "Score: " + score;
+
+        }
+
+        function nextQue() {
+            if (i < quiz.length - 1) {
+                i++;
+                displayQue();
+        
+
+                // Uncheck all radio buttons
+                document.querySelectorAll('input[name="answer"]').forEach((el) => el.checked = false);
+            } else {
+                // alert("This is the last question");
+                finalScore();
+            }
+
+        }
+
+        function finalScore() {
+            console.log("final Score");
+
+            // Hide the question
+            document.getElementById("que").style.display = "none"; // Hide the question element
+            document.getElementById("test1").style.display = "none"; // If "test1" is another element to hide
+
+            // Hide the options (radio buttons and labels)
+            const optionDiv = document.getElementsByClassName("option")[0];
+            optionDiv.style.display = "none";  // Hide the div containing the options
+
+            // Hide the buttons (Check and Next)
+            const buttons = document.querySelectorAll("button");
+            buttons.forEach(button => button.style.display = "none");
+
+            // Display final score
+            document.getElementById("score").innerHTML = "Quiz completed! Your final score is: " + score + " out of " + quiz.length;
+        }
+
+    </script>
+</body>
+
+</html>

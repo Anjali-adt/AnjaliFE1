@@ -1,0 +1,121 @@
+<!--<!DOCTYPE html>
+<html>
+
+<head>
+</head>
+    <title>Quiz</title>
+</head>
+
+
+<body style="margin-top: 5% ; margin-left: 40%;">
+    <centre>
+    <h1>General Knowledge Quiz</h1>
+    <h2 id="que"></h2>
+
+    <input type="text" id="userInput" />
+
+    <button type="submit" onclick="queCheck()">Check</button><br><br>
+    
+    <button style="margin-left: 20px;" onclick="nextQue()">Next</button>
+    </centre>
+   
+    <body>
+        <h2 id="que"></h2>
+        <h2 id="test1"></h2>
+        <h2 id="test2"></h2>
+        <h2 id="test3"></h2>
+        <h2 id="test4"></h2>
+
+        <input type="radio" id="1"  name="answer" class="abc">
+        <label id="a"></label><br>
+
+        <input type="radio" id="2"  name="answer" class="abc">
+        <label id="b"></label><br>
+
+        <input type="radio" id="3" name="answer" class="abc">
+        <label id="c"></label><br>
+
+        <input type="radio" id="4" name="answer" class="abc">
+        <label id="d"></label><br><br>
+
+        <button style="margin-left: 20px;" onclick="nextQue()">Next</button>
+
+        <p id="score"></p>
+
+    <script>
+        const quiz = [{ question: "What is the capital of France?", Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "Paris" },
+        { question: "Is JavaScript a programming language? (yes/no)",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "yes" },
+        { question: "What is 5 + 3?", Answer1:"A",Answer2:"B",Answer3:"C",Answeer4:"D",correctAnswer: "8" },
+        { question: "Is Earth the third planet from the Sun? (yes/no)",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "yes" },
+        { question: "What color is the sky on a clear day?",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "blue" },
+        { question: "Is 10 greater than 15? (yes/no)",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "no" },
+        { question: "What is the opposite of 'up'?",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "down" },
+        { question: "Is water a solid at room temperature? (yes/no)",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "no" },
+        { question: "Which planet is known as the Red Planet?",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "Mars" },
+        { question: "How many legs does a spider have?",Answer1:"A",Answer2:"B",Answer3:"C",Answer4:"D", correctAnswer: "8" }
+        ]
+        let i =0,ques=" ",userInput=" "  ;
+        //let score = 0;
+
+        displayQue();
+
+        function displayQue() {
+            ques = " Q " + (i+1) + " : " + quiz[i].question;
+
+            document.getElementById('test1').innerHTML = ques;
+            document.getElementById('a').innerHTML= quiz[i].Answer1;
+            document.getElementById('b').innerHTML=quiz[i].Answer2;
+            document.getElementById('c').innerHTML=quiz[i].Answer3;
+            document.getElementById('d').innerHTML=quiz[i].Answer4
+            //i++;
+            
+        }
+
+           function queCheck() {
+            let userInput = document.getElementById("userInput").value;
+            let correctAns = quiz[queIndex].correctAnswer;
+
+            
+            const answerValue = selectedAnswer.nextElementSibling.innerHTML;
+            const correctAnswer = quiz[i].correctAnswer;
+
+          
+        
+
+            switch (userInput.toLowerCase() === correctAns.toLowerCase() ) {
+
+                case false:
+                    alert("wrong answer");
+
+                    break;
+
+                case true:
+                    alert("Answer is correct");
+                    break;
+
+
+                default:
+                    alert("Something went wrong");
+                    break;
+            }
+
+           // document.getElementById("score").innerHTML = "Score: " + score;
+        }
+
+        function nextQue() {
+            if (i < quiz.length - 1) {
+                i++;
+                displayQue()
+                document.getElementById("userInput").value = "";
+            }
+            else {
+                alert("This is the last question");
+            }
+        }
+
+        displayQue();
+       
+    </script>
+</body>
+
+</html> -->
