@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head></head>
+    <body>
+        <script>
+              var ans = new Promise(function(res,rej){
+                return res("reached home")
+              })
+              var p2=ans.then(function(data){
+                console.log(data);
+                return new Promise (function(res,rej){
+                    return res("cook food")
+
+                })
+            })
+              var p3=p2.then(function(data){
+                console.log(data);
+                return new Promise(function(res,rej){
+                    res("have dinner")
+              })
+                }) 
+              var p4=p3.then(function(data){
+                console.log(data);
+                return new Promise(function(res,rej){
+                    res("sleeping mode on")
+                })
+              })
+              var p5=p4.then(function(data){
+                console.log(data);
+                return new Promise(function(res,rej){
+                    res()
+                })
+              })
+
+             
+           
+        </script>
+    </body>
+</html>
+
