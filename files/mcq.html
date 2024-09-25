@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .quiz-container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+        }
+        .quiz-title {
+            text-align: center;
+            color: #333;
+        }
+        .quiz-content {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .question-box {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+        .question-box h2 {
+            color: #444;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+        .option {
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .option input {
+            margin-right: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+        }
+        .result h2 {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1 class="quiz-title">Quiz App</h1>
+        <div id="quiz-content" class="quiz-content">
+            <!-- Quiz questions will be inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const quiz = [
+            {
+                question: "What is the capital of France?",
+                options: ["Berlin", "Madrid", "Paris", "Rome"],
+                answer: "Paris"
+            },
+            {
+                question: "Which planet is known as the Red Planet?",
+                options: ["Earth", "Mars", "Jupiter", "Saturn"],
+                answer: "Mars"
+            },
+            {
+                question: "Who wrote the play 'Romeo and Juliet'?",
+                options: ["William Shakespeare", "Charles Dickens", "Mark Twain", "Leo Tolstoy"],
+                answer: "William Shakespeare"
+            },
+            {
+                question: "What is the largest ocean on Earth?",
+                options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"],
+                answer: "Pacific Ocean"
+            },
+            {
+                question: "In which year did World War II end?",
+                options: ["1942", "1943", "1945", "1946"],
+                answer: "1945"
+            },
+            {
+                question: "Which element has the chemical symbol 'O'?",
+                options: ["Oxygen", "Gold", "Osmium", "Oganesson"],
+                answer: "Oxygen"
+            },
+            {
+                question: "Who is the current Secretary-General of the United Nations?",
+                options: ["Ban Ki-moon", "António Guterres", "Kofi Annan", "Boutros Boutros-Ghali"],
+                answer: "António Guterres"
+            },
+            {
+                question: "Which country is home to the kangaroo?",
+                options: ["India", "Australia", "South Africa", "Brazil"],
+                answer: "Australia"
+            },
+            {
+                question: "What is the hardest natural substance on Earth?",
+                options: ["Gold", "Iron", "Diamond", "Silver"],
+                answer: "Diamond"
+            },
+            {
+                question: "Which gas do plants absorb from the atmosphere?",
+                options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Helium"],
+                answer: "Carbon Dioxide"
+            }
+        ];
+
+        const quizContent = document.getElementById('quiz-content');
+        let selectedAnswers = new Array(quiz.length).fill('');
+
+        function renderQuiz() {
+            let quizHTML = '';
+            quiz.forEach((question, index) => {
+                quizHTML += `
+                    <div class="question-box">
+                        <h2>Question ${index + 1}</h2>
+                        <p>${question.question}</p>
+                        <div class="options">
+                            ${question.options.map((option, optionIndex) => `
+                                <label class="option">
+                                    <input type="radio" name="question${index}" value="${option}" 
+                                    ${selectedAnswers[index] === option ? 'checked' : ''}
+                                    onchange="handleAnswerSelect(${index}, '${option}')">
+                                    ${option}
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            quizHTML += '<button class="submit-btn" onclick="handleSubmit()">Submit</button>';
+            quizContent.innerHTML = quizHTML;
+        }
+
+        function handleAnswerSelect(questionIndex, answer) {
+            selectedAnswers[questionIndex] = answer;
+        }
+
+        function handleSubmit() {
+            let score = 0;
+            for (let i = 0; i < quiz.length; i++) {
+                if (selectedAnswers[i] === quiz[i].answer) {
+                    score++;
+                }
+            }
+            showResult(score);
+        }
+
+        function showResult(score) {
+            quizContent.innerHTML = `
+                <div class="result">
+                    <h2>Quiz Completed!</h2>
+                    <p>Your score is: ${score} out of ${quiz.length}</p>
+                </div>
+            `;
+        }
+
+        renderQuiz();
+    </script>
+</body>
+</html>
